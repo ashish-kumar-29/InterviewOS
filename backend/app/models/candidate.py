@@ -1,13 +1,15 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Optional
 
 
 class Mission(BaseModel):
     day: int
     title: str
+
     passed: bool = False
     skipped: bool = False
-    attempts: int
+
+    attempts: Optional[int] = None
 
 
 class Signals(BaseModel):
