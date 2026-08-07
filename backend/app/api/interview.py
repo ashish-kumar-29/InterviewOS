@@ -1,26 +1,20 @@
 from fastapi import APIRouter
-import uuid
 
+from app.controllers.interview_controller import InterviewController
 from app.models.request import InterviewRequest
-from app.models.response import InterviewResponse
 
 router = APIRouter(prefix="/api", tags=["Interview"])
 
+controller = InterviewController()
 
-@router.post("/interview", response_model=InterviewResponse)
+
+@router.post("/interview")
 def interview(request: InterviewRequest):
 
-    session_id = request.sessionId or str(uuid.uuid4())
+    if request.sessionId is None:
 
-    if request.message is None:
-        return InterviewResponse(
-            sessionId=session_id,
-            reply="Welcome to InterviewOS! Let's begin. Can you briefly introduce yourself and your AI engineering background?",
-            done=False,
-        )
+        return controller.start(request.candidateId)
 
-    return InterviewResponse(
-        sessionId=session_id,
-        reply="Thanks! (Mock Response) Next question will be generated here.",
-        done=False,
-    )
+    return {
+        "message": "Continue interview coming next..."
+    }
