@@ -1,242 +1,952 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InterviewOS - AI Interview</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InterviewOS - AI Technical Interview</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #0f172a;
-            color: #f8fafc;
-            min-height: 100vh;
-        }
+:root {
+    --bg: #070b18;
+    --bg2: #0b1020;
+    --card: #10172a;
+    --card2: #141d32;
+    --border: #26324a;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --green: #22c55e;
+    --green-dark: #16a34a;
+    --purple: #a855f7;
+    --cyan: #22d3ee;
+}
 
-        .navbar {
-            height: 70px;
-            padding: 0 7%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid #334155;
-        }
+body {
+    font-family: Inter, Arial, sans-serif;
+    background:
+        radial-gradient(circle at 15% 10%, rgba(168,85,247,.12), transparent 25%),
+        radial-gradient(circle at 85% 20%, rgba(34,211,238,.08), transparent 25%),
+        var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
 
-        .logo {
-            font-size: 25px;
-            font-weight: bold;
-        }
+/* =========================
+   NAVBAR
+========================= */
 
-        .badge {
-            background: #22c55e;
-            color: #052e16;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            margin-left: 8px;
-        }
+.navbar {
+    height: 72px;
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+    background: rgba(7,11,24,.82);
+    backdrop-filter: blur(15px);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
 
-        .container {
-            width: 90%;
-            max-width: 900px;
-            margin: 45px auto;
-        }
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 
-        .header {
-            margin-bottom: 25px;
-        }
+.logo {
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: -.5px;
+}
 
-        .header h1 {
-            font-size: 32px;
-            margin-bottom: 8px;
-        }
+.badge {
+    background: rgba(34,197,94,.15);
+    color: #4ade80;
+    border: 1px solid rgba(34,197,94,.3);
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
 
-        .header p {
-            color: #94a3b8;
-        }
+.candidate {
+    color: #e2e8f0;
+    font-size: 15px;
+    font-weight: 600;
+}
 
-        .progress-box {
-            margin: 25px 0;
-        }
+/* =========================
+   COMMON
+========================= */
 
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            color: #94a3b8;
-        }
+.container {
+    width: 90%;
+    max-width: 1050px;
+    margin: auto;
+}
 
-        .progress {
-            height: 8px;
-            background: #1e293b;
-            border-radius: 10px;
-            overflow: hidden;
-        }
+button {
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
 
-        .progress-bar {
-            height: 100%;
-            width: 12.5%;
-            background: #22c55e;
-            transition: 0.3s;
-        }
+.hidden {
+    display: none !important;
+}
 
-        .card {
-            background: #1e293b;
-            border: 1px solid #334155;
-            border-radius: 18px;
-            padding: 35px;
-        }
+/* =========================
+   START PAGE
+========================= */
 
-        .question-label {
-            color: #22c55e;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
+#startPage {
+    padding: 65px 0 80px;
+}
 
-        #question {
-            font-size: 22px;
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
+.hero {
+    text-align: center;
+    max-width: 800px;
+    margin: auto;
+}
 
-        textarea {
-            width: 100%;
-            min-height: 180px;
-            resize: vertical;
-            border: 1px solid #475569;
-            border-radius: 12px;
-            background: #0f172a;
-            color: white;
-            padding: 18px;
-            font-size: 16px;
-            outline: none;
-        }
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 30px;
+    background: rgba(168,85,247,.12);
+    border: 1px solid rgba(168,85,247,.25);
+    color: #c084fc;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 22px;
+}
 
-        textarea:focus {
-            border-color: #22c55e;
-        }
+.hero h1 {
+    font-size: clamp(42px, 6vw, 68px);
+    line-height: 1.05;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+}
 
-        .actions {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 20px;
-        }
+.gradient-text {
+    background: linear-gradient(
+        90deg,
+        #c084fc,
+        #22d3ee,
+        #4ade80
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
 
-        button {
-            border: none;
-            border-radius: 10px;
-            padding: 13px 25px;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+.hero p {
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.7;
+    max-width: 650px;
+    margin: auto;
+}
 
-        #submitBtn {
-            background: #22c55e;
-            color: #052e16;
-        }
+/* candidate card */
 
-        #submitBtn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+.profile-card {
+    margin: 45px auto 30px;
+    max-width: 800px;
+    padding: 24px;
+    background: linear-gradient(
+        145deg,
+        rgba(20,29,50,.95),
+        rgba(13,19,35,.95)
+    );
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
 
-        .loading {
-            display: none;
-            color: #94a3b8;
-            margin-top: 15px;
-        }
+.profile-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
 
-        #result {
-            display: none;
-        }
+.avatar {
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #9333ea, #06b6d4);
+    font-size: 22px;
+    font-weight: 800;
+}
 
-        .feedback-section {
-            margin-top: 20px;
-        }
+.profile-name {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
 
-        .feedback-card {
-            background: #0f172a;
-            border-radius: 12px;
-            padding: 20px;
-            margin-top: 12px;
-        }
+.profile-role {
+    color: var(--muted);
+    font-size: 14px;
+}
 
-        .feedback-card h3 {
-            margin-bottom: 12px;
-        }
+.experience {
+    text-align: right;
+}
 
-        .feedback-card li {
-            margin: 8px 0;
-            color: #cbd5e1;
-        }
+.experience strong {
+    display: block;
+    font-size: 20px;
+}
 
-        .score {
-    width: 120px;
-    height: 120px;
+.experience span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* feature grid */
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 25px auto;
+    max-width: 900px;
+}
+
+.feature {
+    padding: 22px;
+    background: rgba(16,23,42,.8);
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    transition: .25s;
+}
+
+.feature:hover {
+    transform: translateY(-3px);
+    border-color: rgba(168,85,247,.45);
+}
+
+.feature-icon {
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+
+.feature h3 {
+    font-size: 15px;
+    margin-bottom: 7px;
+}
+
+.feature p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* interview info */
+
+.interview-info {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 25px;
+    background: rgba(11,16,32,.8);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+}
+
+.info-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+.info-item {
+    text-align: center;
+    padding: 15px;
+    border-radius: 12px;
+    background: rgba(255,255,255,.025);
+}
+
+.info-number {
+    font-size: 22px;
+    font-weight: 800;
+    color: #c084fc;
+    margin-bottom: 5px;
+}
+
+.info-label {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+/* tips */
+
+.tips {
+    max-width: 900px;
+    margin: 25px auto;
+    padding: 20px 24px;
+    border-radius: 16px;
+    background: rgba(34,197,94,.05);
+    border: 1px solid rgba(34,197,94,.15);
+}
+
+.tips h3 {
+    color: #4ade80;
+    margin-bottom: 12px;
+}
+
+.tips ul {
+    padding-left: 20px;
+    color: var(--muted);
+}
+
+.tips li {
+    margin: 7px 0;
+}
+
+/* start button */
+
+.start-wrapper {
+    text-align: center;
+    margin-top: 35px;
+}
+
+.start-btn {
+    padding: 16px 38px;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #03120a;
+    font-size: 16px;
+    font-weight: 800;
+    box-shadow: 0 10px 35px rgba(34,197,94,.18);
+    transition: .25s;
+}
+
+.start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 40px rgba(34,197,94,.28);
+}
+
+.start-note {
+    color: #64748b;
+    font-size: 12px;
+    margin-top: 12px;
+}
+
+/* =========================
+   INTERVIEW PAGE
+========================= */
+
+#interviewPage {
+    padding: 45px 0 70px;
+}
+
+.header {
+    margin-bottom: 28px;
+}
+
+.header h1 {
+    font-size: 38px;
+    margin-bottom: 8px;
+    letter-spacing: -.8px;
+}
+
+.header p {
+    color: var(--muted);
+    font-size: 16px;
+}
+
+/* progress */
+
+.progress-box {
+    margin: 25px 0 28px;
+}
+
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.progress {
+    height: 7px;
+    background: #172033;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 12.5%;
+    background: linear-gradient(90deg, #22c55e, #34d399);
+    transition: width .4s ease;
+}
+
+/* question card */
+
+.card {
+    background:
+        linear-gradient(
+            145deg,
+            rgba(20,29,50,.96),
+            rgba(15,23,42,.96)
+        );
+    border: 1px solid #2a3852;
+    border-radius: 22px;
+    padding: 38px;
+    box-shadow: 0 20px 70px rgba(0,0,0,.2);
+}
+
+.question-label {
+    color: #22c55e;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .7px;
+    margin-bottom: 20px;
+}
+
+#question {
+    font-size: 24px;
+    line-height: 1.55;
+    margin-bottom: 25px;
+}
+
+textarea {
+    width: 100%;
+    min-height: 200px;
+    resize: vertical;
+    border: 1px solid #34425d;
+    border-radius: 15px;
+    background: #0b1224;
+    color: white;
+    padding: 20px;
+    font-size: 16px;
+    line-height: 1.6;
+    outline: none;
+    transition: .2s;
+}
+
+textarea::placeholder {
+    color: #64748b;
+}
+
+textarea:focus {
+    border-color: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34,197,94,.08);
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+#submitBtn {
+    padding: 14px 28px;
+    border-radius: 12px;
+    background: #22c55e;
+    color: #03120a;
+    font-size: 15px;
+    font-weight: 800;
+    transition: .2s;
+}
+
+#submitBtn:hover {
+    background: #34d399;
+    transform: translateY(-1px);
+}
+
+#submitBtn:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#answerStatus {
+    margin: 12px 0;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.loading {
+    display: none;
+    color: #94a3b8;
+    margin-top: 15px;
+}
+
+/* =========================
+   RESULT
+========================= */
+
+#result {
+    display: none;
+}
+
+.result-card {
+    text-align: center;
+}
+
+.result-card h1 {
+    font-size: 38px;
+}
+
+.score {
+    width: 140px;
+    height: 140px;
     border: 8px solid #22c55e;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 28px;
-    font-weight: bold;
-    margin: 25px 0;
+    font-size: 30px;
+    font-weight: 800;
+    margin: 30px auto;
 }
 
-        #restartBtn {
-            margin-top: 25px;
-            background: #22c55e;
-            color: #052e16;
-        }
+.feedback-section {
+    margin-top: 30px;
+    text-align: left;
+}
 
-        #answerStatus {
-    margin: 12px 0;
+.feedback-card {
+    background: #0b1224;
+    border: 1px solid #24314a;
+    border-radius: 15px;
+    padding: 22px;
+    margin-top: 14px;
+}
+
+.feedback-card h3 {
+    margin-bottom: 12px;
+}
+
+.feedback-card li {
+    margin: 8px 0;
+    color: #cbd5e1;
+    line-height: 1.5;
+}
+
+#restartBtn {
+    margin-top: 25px;
+    padding: 14px 25px;
+    border-radius: 12px;
+    background: #22c55e;
+    color: #03120a;
+    font-weight: 800;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 750px) {
+
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .candidate {
+        display: none;
+    }
+
+    .container {
+        width: 92%;
+    }
+
+    #startPage {
+        padding-top: 45px;
+    }
+
+    .hero h1 {
+        font-size: 42px;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+    }
+
+    .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .profile-card {
+        align-items: flex-start;
+    }
+
+    .experience {
+        display: none;
+    }
+
+    .card {
+        padding: 25px;
+    }
+
+    #question {
+        font-size: 20px;
+    }
+
+    .actions {
+        justify-content: stretch;
+    }
+
+    #submitBtn {
+        width: 100%;
+    }
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 22px;
+    gap: 15px;
+}
+
+.exit-btn {
+    padding: 14px 22px;
+    border-radius: 12px;
+    background: transparent;
     color: #94a3b8;
+    border: 1px solid #34425d;
     font-size: 14px;
+    font-weight: 700;
+    transition: .2s;
 }
-    </style>
+
+.exit-btn:hover {
+    color: #f8fafc;
+    border-color: #64748b;
+    background: rgba(255,255,255,.04);
+}
+
+#submitBtn {
+    padding: 14px 28px;
+    border-radius: 12px;
+    background: #22c55e;
+    color: #03120a;
+    font-size: 15px;
+    font-weight: 800;
+    transition: .2s;
+}
+
+#submitBtn:hover {
+    background: #34d399;
+    transform: translateY(-1px);
+}
+
+/* .result-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 28px;
+} */
+
+.result-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 28px;
+}
+
+#homeBtn,
+#restartBtn {
+    width: 240px;
+    height: 60px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border-radius: 14px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+#homeBtn {
+    background: transparent;
+    color: #cbd5e1;
+    border: 1px solid #34425d;
+}
+
+#homeBtn:hover {
+    background: rgba(255,255,255,.05);
+    border-color: #64748b;
+}
+
+#restartBtn {
+    background: #22c55e;
+    color: #03120a;
+}
+
+#restartBtn:hover {
+    background: #34d399;
+}
+</style>
 </head>
 
 <body>
 
+<!-- =========================
+     NAVBAR
+========================= -->
+
 <nav class="navbar">
-    <div class="logo">
-        InterviewOS
+
+    <div class="logo-area">
+        <div class="logo">InterviewOS</div>
         <span class="badge">AI Interview</span>
     </div>
 
-    <div id="candidateName">
+    <div class="candidate" id="candidateName">
         Candidate
     </div>
+
 </nav>
 
-<main class="container">
+
+<!-- =========================
+     START PAGE
+========================= -->
+
+<section id="startPage">
+
+<div class="container">
+
+    <div class="hero">
+
+        <div class="hero-badge">
+            ✦ AI-Powered Technical Interview
+        </div>
+
+        <h1>
+            Think like an engineer.<br>
+            <span class="gradient-text">
+                Interview like one.
+            </span>
+        </h1>
+
+        <p>
+            A personalized technical interview that adapts to your
+            learning journey, evaluates your answers, and gives you
+            actionable feedback.
+        </p>
+
+    </div>
+
+
+    <!-- Candidate -->
+
+    <div class="profile-card">
+
+        <div class="profile-left">
+
+            <div class="avatar" id="avatar">
+                SJ
+            </div>
+
+            <div>
+                <div class="profile-name" id="profileName">
+                    Sarah Johnson
+                </div>
+
+                <div class="profile-role" id="profileRole">
+                    Senior Data Engineer
+                </div>
+            </div>
+
+        </div>
+
+        <div class="experience">
+
+            <strong id="profileExperience">
+                9 Years
+            </strong>
+
+            <span>Professional Experience</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Features -->
+
+    <div class="features">
+
+        <div class="feature">
+            <div class="feature-icon">🧠</div>
+            <h3>Adaptive Questions</h3>
+            <p>
+                Questions adjust based on the quality of your previous
+                answers.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">🎯</div>
+            <h3>Personalized</h3>
+            <p>
+                Interview topics are selected from your cohort learning
+                journey.
+            </p>
+        </div>
+
+        <div class="feature">
+            <div class="feature-icon">📊</div>
+            <h3>Actionable Feedback</h3>
+            <p>
+                Receive strengths, improvement areas and recommended
+                next steps.
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- Interview information -->
+
+    <div class="interview-info">
+
+        <div class="info-title">
+            Your Interview
+        </div>
+
+        <div class="info-grid">
+
+            <div class="info-item">
+                <div class="info-number">8</div>
+                <div class="info-label">Questions</div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-number">4+</div>
+                <div class="info-label">Curriculum Areas</div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-number">AI</div>
+                <div class="info-label">Evaluation</div>
+            </div>
+
+            <div class="info-item">
+                <div class="info-number">~15</div>
+                <div class="info-label">Minutes</div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- What happens -->
+
+    <div class="tips">
+
+        <h3>💡 Before you begin</h3>
+
+        <ul>
+            <li>Answer each question in your own words.</li>
+            <li>Explain your reasoning instead of giving only definitions.</li>
+            <li>The interviewer may ask follow-up questions based on your answer.</li>
+            <li>Your final report will include your strengths and areas to improve.</li>
+        </ul>
+
+    </div>
+
+
+    <!-- Start -->
+
+    <div class="start-wrapper">
+
+        <button
+            class="start-btn"
+            id="startInterviewBtn"
+        >
+            Start Interview →
+        </button>
+
+        <div class="start-note">
+            Your interview session will begin immediately.
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =========================
+     INTERVIEW PAGE
+========================= -->
+
+<section id="interviewPage" class="hidden">
+
+<div class="container">
 
     <div class="header">
-        <h1>AI Technical Interview</h1>
-        <p>Adaptive interview powered by InterviewOS</p>
+
+        <h1>
+            AI Technical Interview
+        </h1>
+
+        <p>
+            Adaptive interview powered by InterviewOS
+        </p>
+
     </div>
+
 
     <div class="progress-box">
 
         <div class="progress-info">
-            <span id="progressText">Question 1 of 8</span>
-            <span id="scoreText">Interview in progress</span>
+
+            <span id="progressText">
+                Question 1 of 8
+            </span>
+
+            <span id="scoreText">
+                Interview in progress
+            </span>
+
         </div>
 
         <div class="progress">
-            <div class="progress-bar" id="progressBar"></div>
+
+            <div
+                class="progress-bar"
+                id="progressBar">
+            </div>
+
         </div>
 
     </div>
+
 
     <div class="card" id="interviewCard">
 
@@ -247,59 +957,112 @@
         <div id="question">
             Loading interview...
         </div>
-         <div id="answerStatus"></div>
+
+        <div id="answerStatus"></div>
+
         <textarea
             id="answer"
-            placeholder="Type your answer here..."
+            placeholder="Explain your answer here..."
         ></textarea>
 
         <div class="actions">
-            <button id="submitBtn">
-                Submit Answer
-            </button>
-        </div>
 
-        <div class="loading" id="loading">
+    <button
+        id="exitBtn"
+        class="exit-btn"
+        onclick="goHome()"
+    >
+        ← Exit Interview
+    </button>
+
+    <button id="submitBtn">
+        Submit Answer →
+    </button>
+
+</div>
+
+        <div
+            class="loading"
+            id="loading"
+        >
             Evaluating your answer...
         </div>
 
     </div>
 
+
+    <!-- RESULT -->
+
     <div id="result">
 
-        <div class="card">
+        <div class="card result-card">
 
-            <h1>Interview Completed 🎉</h1>
+            <h1>
+                Interview Completed 🎉
+            </h1>
 
-            <div class="score" id="finalScore">
+            <div
+                class="score"
+                id="finalScore"
+            >
                 --/10
             </div>
 
             <div class="feedback-section">
 
                 <div class="feedback-card">
+
                     <h3>Summary</h3>
+
                     <p id="summary"></p>
+
                 </div>
 
+
                 <div class="feedback-card">
+
                     <h3>Strengths</h3>
+
                     <ul id="strengths"></ul>
+
                 </div>
 
+
                 <div class="feedback-card">
+
                     <h3>Areas to Improve</h3>
+
                     <ul id="gaps"></ul>
+
                 </div>
+
 
                 <div class="feedback-card">
+
                     <h3>Next Steps</h3>
+
                     <ul id="nextSteps"></ul>
+
                 </div>
 
-                <button id="restartBtn" onclick="restartInterview()">
-                    Restart Interview
-                </button>
+
+                <div class="result-actions">
+
+    <button
+        id="homeBtn"
+        onclick="goHome()"
+    >
+        ← Home
+    </button>
+
+    <button
+        id="restartBtn"
+        onclick="restartInterview()"
+    >
+        ↻ Restart Interview
+    </button>
+
+</div>
 
             </div>
 
@@ -307,19 +1070,46 @@
 
     </div>
 
-</main>
+</div>
+
+</section>
+
 
 <script>
 
-const API_URL = "http://127.0.0.1:8000/api/interview";
+/* =========================
+   API
+========================= */
+
+const API_URL =
+    "http://127.0.0.1:8000/api/interview";
+
+
+/* =========================
+   SESSION
+========================= */
 
 const sessionId =
     "frontend-" + Date.now();
 
+
 let questionNumber = 1;
+
 const totalQuestions = 8;
 
+
+/* =========================
+   CANDIDATE
+========================= */
+
+/*
+   Replace this mock candidate with the
+   candidate profile coming from your
+   actual candidates.json.
+*/
+
 let candidate = {
+
     member: {
         id: "CAND-001",
         name: "Sarah Johnson",
@@ -328,122 +1118,318 @@ let candidate = {
         education: "B.Tech"
     },
 
-    missions: [],
+    missions: [
+        {
+            day: 7,
+            title: "Embeddings Explained",
+            passed: true,
+            attempts: 1
+        },
+        {
+            day: 8,
+            title: "Vector Databases Overview",
+            passed: true,
+            attempts: 1
+        },
+        {
+            day: 12,
+            title: "Prompt Engineering Fundamentals",
+            passed: true,
+            attempts: 1
+        },
+        {
+            day: 16,
+            title: "Chatbot Backend & API Integration",
+            passed: true,
+            attempts: 2
+        },
+        {
+            day: 22,
+            title: "Multi-Agent Orchestration",
+            passed: true,
+            attempts: 1
+        },
+        {
+            day: 23,
+            title: "Model Context Protocol",
+            passed: true,
+            attempts: 1
+        },
+        {
+            day: 24,
+            title: "Agentic Chatbot Integration",
+            passed: true,
+            attempts: 1
+        },
+        {
+            day: 28,
+            title: "Docker & Kubernetes Deployment",
+            passed: true,
+            attempts: 2
+        }
+    ],
 
     signals: {
         commitDays: 28,
         missionsCompleted: 30,
         missionsFirstTry: 20
     }
+
 };
 
-document.getElementById("candidateName").textContent =
+
+/* =========================
+   PROFILE UI
+========================= */
+
+const name =
     candidate.member.name;
+
+document.getElementById(
+    "candidateName"
+).textContent = name;
+
+document.getElementById(
+    "profileName"
+).textContent = name;
+
+document.getElementById(
+    "profileRole"
+).textContent =
+    candidate.member.jobRole;
+
+document.getElementById(
+    "profileExperience"
+).textContent =
+    candidate.member.yearsExperience + " Years";
+
+
+const initials =
+    name
+        .split(" ")
+        .map(word => word[0])
+        .join("")
+        .slice(0, 2)
+        .toUpperCase();
+
+document.getElementById(
+    "avatar"
+).textContent = initials;
+
+
+/* =========================
+   START INTERVIEW
+========================= */
+
+document
+    .getElementById("startInterviewBtn")
+    .addEventListener(
+        "click",
+        startInterview
+    );
+
 
 async function startInterview() {
 
+    document
+        .getElementById("startPage")
+        .classList.add("hidden");
+
+    document
+        .getElementById("interviewPage")
+        .classList.remove("hidden");
+
     try {
 
-        const response = await fetch(API_URL, {
-            method: "POST",
+        const response =
+            await fetch(API_URL, {
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+                method: "POST",
 
-            body: JSON.stringify({
-                sessionId: sessionId,
-                candidate: candidate
-            })
-        });
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
 
-        const data = await response.json();
+                body: JSON.stringify({
+
+                    sessionId:
+                        sessionId,
+
+                    candidate:
+                        candidate
+
+                })
+
+            });
+
+
+        const data =
+            await response.json();
+
 
         if (!response.ok) {
+
             throw new Error(
                 JSON.stringify(data)
             );
+
         }
 
-        showQuestion(data.reply);
+
+        showQuestion(
+            data.reply
+        );
+
 
     } catch (error) {
 
-        document.getElementById("question").textContent =
-            "Unable to start interview.";
-
         console.error(error);
+
+        document
+            .getElementById("question")
+            .textContent =
+                "Unable to start interview.";
+
     }
+
 }
+
+
+/* =========================
+   SHOW QUESTION
+========================= */
 
 function showQuestion(question) {
 
-    document.getElementById("question").textContent =
-        question;
+    document
+        .getElementById("question")
+        .textContent =
+            question;
 
-    document.getElementById("answer").value = "";
+    document
+        .getElementById("answer")
+        .value = "";
 
-    document.getElementById("progressText").textContent =
-        `Question ${questionNumber} of ${totalQuestions}`;
+    document
+        .getElementById("answerStatus")
+        .textContent = "";
 
-    document.getElementById("progressBar").style.width =
-        `${(questionNumber / totalQuestions) * 100}%`;
+    document
+        .getElementById("progressText")
+        .textContent =
+            `Question ${questionNumber} of ${totalQuestions}`;
+
+    document
+        .getElementById("progressBar")
+        .style.width =
+            `${(questionNumber / totalQuestions) * 100}%`;
+
 }
+
+
+/* =========================
+   SUBMIT ANSWER
+========================= */
 
 async function submitAnswer() {
 
     const answer =
-        document.getElementById("answer").value.trim();
+        document
+            .getElementById("answer")
+            .value
+            .trim();
+
 
     if (!answer) {
-        alert("Please enter your answer.");
+
+        alert(
+            "Please enter your answer."
+        );
+
         return;
+
     }
 
+
     const button =
-        document.getElementById("submitBtn");
+        document.getElementById(
+            "submitBtn"
+        );
 
     const loading =
-        document.getElementById("loading");
+        document.getElementById(
+            "loading"
+        );
+
 
     button.disabled = true;
+
     loading.style.display = "block";
+
 
     try {
 
-        const response = await fetch(API_URL, {
-            method: "POST",
+        const response =
+            await fetch(API_URL, {
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+                method: "POST",
 
-            body: JSON.stringify({
-                sessionId: sessionId,
-                message: answer
-            })
-        });
+                headers: {
+                    "Content-Type":
+                        "application/json"
+                },
 
-        const data = await response.json();
+                body: JSON.stringify({
+
+                    sessionId:
+                        sessionId,
+
+                    message:
+                        answer
+
+                })
+
+            });
+
+
+        const data =
+            await response.json();
+
 
         if (!response.ok) {
+
             throw new Error(
                 JSON.stringify(data)
             );
+
         }
+
 
         if (data.done) {
 
             showFinalResult(data);
 
             return;
+
         }
-        document.getElementById("answerStatus").textContent =
-            "Answer evaluated. Preparing your next question...";
+
+
+        document
+            .getElementById(
+                "answerStatus"
+            )
+            .textContent =
+                "Answer evaluated. Preparing your next question...";
+
 
         questionNumber++;
 
-        showQuestion(data.reply);
+
+        showQuestion(
+            data.reply
+        );
+
 
     } catch (error) {
 
@@ -456,79 +1442,137 @@ async function submitAnswer() {
     } finally {
 
         button.disabled = false;
+
         loading.style.display = "none";
+
     }
+
 }
+
+
+/* =========================
+   FINAL RESULT
+========================= */
 
 function showFinalResult(data) {
 
-    document.getElementById("interviewCard").style.display =
-        "none";
+    document
+        .getElementById(
+            "interviewCard"
+        )
+        .style.display = "none";
 
-    document.querySelector(".progress-box").style.display =
-        "none";
 
-    document.getElementById("result").style.display =
-        "block";
+    document
+        .querySelector(
+            ".progress-box"
+        )
+        .style.display = "none";
 
-    const feedback = data.feedback || {};
+
+    document
+        .getElementById(
+            "result"
+        )
+        .style.display = "block";
+
+
+    const feedback =
+        data.feedback || {};
+
 
     const summary =
-        feedback.summary || "Interview completed.";
+        feedback.summary ||
+        "Interview completed.";
 
-    document.getElementById("summary").textContent =
-        summary;
 
-    // Extract average score from:
-    // "Interview completed with an average score of 2.0/10."
-    const match = summary.match(
-        /average score of ([0-9.]+)\/10/
-    );
+    document
+        .getElementById(
+            "summary"
+        )
+        .textContent =
+            summary;
+
+
+    const match =
+        summary.match(
+            /average score of ([0-9.]+)\/10/
+        );
+
 
     if (match) {
 
-        document.getElementById("finalScore").textContent =
-            `${match[1]}/10`;
+        document
+            .getElementById(
+                "finalScore"
+            )
+            .textContent =
+                `${match[1]}/10`;
 
     } else {
 
-        document.getElementById("finalScore").textContent =
-            "--/10";
+        document
+            .getElementById(
+                "finalScore"
+            )
+            .textContent =
+                "--/10";
+
     }
+
 
     renderList(
         "strengths",
         feedback.strengths
     );
 
+
     renderList(
         "gaps",
         feedback.gaps
     );
 
+
     renderList(
         "nextSteps",
         feedback.next
     );
+
 }
 
-function renderList(id, items) {
+
+/* =========================
+   LIST RENDERER
+========================= */
+
+function renderList(
+    id,
+    items
+) {
 
     const element =
         document.getElementById(id);
 
     element.innerHTML = "";
 
-    if (!items || items.length === 0) {
 
-        const li = document.createElement("li");
+    if (
+        !items ||
+        items.length === 0
+    ) {
 
-        li.textContent = "None identified.";
+        const li =
+            document.createElement("li");
+
+        li.textContent =
+            "None identified.";
 
         element.appendChild(li);
 
         return;
+
     }
+
 
     items.forEach(item => {
 
@@ -538,19 +1582,35 @@ function renderList(id, items) {
         li.textContent = item;
 
         element.appendChild(li);
+
     });
+
 }
 
-document.getElementById("submitBtn")
+
+/* =========================
+   EVENTS
+========================= */
+
+document
+    .getElementById("submitBtn")
     .addEventListener(
         "click",
         submitAnswer
     );
 
-startInterview();
+
+/* =========================
+   RESTART
+========================= */
+function goHome() {
+    window.location.href = "interview.html";
+}
 
 function restartInterview() {
+
     window.location.reload();
+
 }
 
 </script>
