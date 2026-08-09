@@ -8,6 +8,15 @@ Built for the **ABTalks AI Engineering Hackathon**, InterviewOS evaluates candid
 
 ---
 
+## 📸 Screenshots
+🎯 HomePage
+<img width="1867" height="1168" alt="Screenshot 2026-08-09 173958" src="https://github.com/user-attachments/assets/ce6905d5-6779-455e-aca2-f4486b8bea0e" />
+
+🎯 Interview
+<img width="1867" height="1097" alt="Screenshot 2026-08-09 174008" src="https://github.com/user-attachments/assets/38e5dfe7-1659-45fd-b632-cbfbd1d8b970" />
+
+---
+
 ## 🚀 Key Features
 
 ### 🎯 Adaptive Technical Interviews
