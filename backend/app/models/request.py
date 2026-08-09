@@ -1,8 +1,9 @@
-from pydantic import BaseModel
 from typing import Optional
+from pydantic import BaseModel
+from app.models.candidate import Candidate
 
 
 class InterviewRequest(BaseModel):
-    sessionId: Optional[str] = None
-    candidateId: Optional[str] = None
+    sessionId: str
+    candidate: Optional[Candidate] = None
     message: Optional[str] = None

@@ -1,5 +1,5 @@
-from pydantic import BaseModel
 from typing import Optional
+from pydantic import BaseModel
 
 
 class Feedback(BaseModel):
@@ -10,7 +10,6 @@ class Feedback(BaseModel):
 
 
 class InterviewResponse(BaseModel):
-    sessionId: str
     reply: str
     done: bool
     feedback: Optional[Feedback] = None

@@ -10,11 +10,4 @@ controller = InterviewController()
 
 @router.post("/interview")
 def interview(request: InterviewRequest):
-
-    if request.sessionId is None:
-
-        return controller.start(request.candidateId)
-
-    return {
-        "message": "Continue interview coming next..."
-    }
+    return controller.process(request)

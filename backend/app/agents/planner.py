@@ -13,7 +13,7 @@ class InterviewPlanner:
 
         objectives = []
 
-        # Always include skipped missions first
+        # Existing skipped missions
         for mission in candidate.missions:
 
             if mission.skipped:
@@ -49,15 +49,44 @@ class InterviewPlanner:
                     "priority": "LOW"
                 })
 
+        # -----------------------------------------
+        # FALLBACK OBJECTIVES
+        # -----------------------------------------
+
+        fallback_topics = [
+            "Python & Programming Fundamentals",
+            "Data Structures & Algorithms",
+            "SQL & Database Systems",
+            "Machine Learning Fundamentals",
+            "APIs & Backend Development",
+            "System Design",
+            "AI & LLM Concepts",
+            "Problem Solving & Debugging"
+        ]
+
+        existing_titles = {
+            obj["title"]
+            for obj in objectives
+        }
+
+        for topic in fallback_topics:
+
+            if topic not in existing_titles:
+
+                objectives.append({
+                    "type": "technical",
+                    "day": len(objectives) + 1,
+                    "title": topic,
+                    "priority": "MEDIUM"
+                })
+
+        # Exactly enough for an interview
+        objectives = objectives[:8]
+
         return {
-
             "candidate": profile,
-
             "difficulty": difficulty,
-
             "minimum_questions": 8,
-
             "minimum_curriculum_days": 4,
-
             "objectives": objectives
         }

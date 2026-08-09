@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InterviewOS - AI Interview</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            color: #f8fafc;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            height: 70px;
+            padding: 0 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #334155;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .badge {
+            background: #22c55e;
+            color: #052e16;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 45px auto;
+        }
+
+        .header {
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #94a3b8;
+        }
+
+        .progress-box {
+            margin: 25px 0;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            color: #94a3b8;
+        }
+
+        .progress {
+            height: 8px;
+            background: #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 12.5%;
+            background: #22c55e;
+            transition: 0.3s;
+        }
+
+        .card {
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 18px;
+            padding: 35px;
+        }
+
+        .question-label {
+            color: #22c55e;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        #question {
+            font-size: 22px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 180px;
+            resize: vertical;
+            border: 1px solid #475569;
+            border-radius: 12px;
+            background: #0f172a;
+            color: white;
+            padding: 18px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: #22c55e;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+
+        button {
+            border: none;
+            border-radius: 10px;
+            padding: 13px 25px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #submitBtn {
+            background: #22c55e;
+            color: #052e16;
+        }
+
+        #submitBtn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            display: none;
+            color: #94a3b8;
+            margin-top: 15px;
+        }
+
+        #result {
+            display: none;
+        }
+
+        .feedback-section {
+            margin-top: 20px;
+        }
+
+        .feedback-card {
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 12px;
+        }
+
+        .feedback-card h3 {
+            margin-bottom: 12px;
+        }
+
+        .feedback-card li {
+            margin: 8px 0;
+            color: #cbd5e1;
+        }
+
+        .score {
+            font-size: 42px;
+            font-weight: bold;
+            color: #22c55e;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">
+        InterviewOS
+        <span class="badge">AI Interview</span>
+    </div>
+
+    <div id="candidateName">
+        Candidate
+    </div>
+</nav>
+
+<main class="container">
+
+    <div class="header">
+        <h1>AI Technical Interview</h1>
+        <p>Adaptive interview powered by InterviewOS</p>
+    </div>
+
+    <div class="progress-box">
+
+        <div class="progress-info">
+            <span id="progressText">Question 1 of 8</span>
+            <span id="scoreText">Interview in progress</span>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+    </div>
+
+    <div class="card" id="interviewCard">
+
+        <div class="question-label">
+            TECHNICAL QUESTION
+        </div>
+
+        <div id="question">
+            Loading interview...
+        </div>
+
+        <textarea
+            id="answer"
+            placeholder="Type your answer here..."
+        ></textarea>
+
+        <div class="actions">
+            <button id="submitBtn">
+                Submit Answer
+            </button>
+        </div>
+
+        <div class="loading" id="loading">
+            Evaluating your answer...
+        </div>
+
+    </div>
+
+    <div id="result">
+
+        <div class="card">
+
+            <h1>Interview Completed 🎉</h1>
+
+            <div class="score" id="finalScore">
+                --/10
+            </div>
+
+            <div class="feedback-section">
+
+                <div class="feedback-card">
+                    <h3>Summary</h3>
+                    <p id="summary"></p>
+                </div>
+
+                <div class="feedback-card">
+                    <h3>Strengths</h3>
+                    <ul id="strengths"></ul>
+                </div>
+
+                <div class="feedback-card">
+                    <h3>Areas to Improve</h3>
+                    <ul id="gaps"></ul>
+                </div>
+
+                <div class="feedback-card">
+                    <h3>Next Steps</h3>
+                    <ul id="nextSteps"></ul>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<script>
+
+const API_URL = "http://127.0.0.1:8000/api/interview";
+
+const sessionId =
+    "frontend-" + Date.now();
+
+let questionNumber = 1;
+const totalQuestions = 8;
+
+let candidate = {
+    member: {
+        id: "CAND-001",
+        name: "Sarah Johnson",
+        jobRole: "Senior Data Engineer",
+        yearsExperience: 9,
+        education: "B.Tech"
+    },
+
+    missions: [],
+
+    signals: {
+        commitDays: 28,
+        missionsCompleted: 30,
+        missionsFirstTry: 20
+    }
+};
+
+document.getElementById("candidateName").textContent =
+    candidate.member.name;
+
+async function startInterview() {
+
+    try {
+
+        const response = await fetch(API_URL, {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                sessionId: sessionId,
+                candidate: candidate
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                JSON.stringify(data)
+            );
+        }
+
+        showQuestion(data.reply);
+
+    } catch (error) {
+
+        document.getElementById("question").textContent =
+            "Unable to start interview.";
+
+        console.error(error);
+    }
+}
+
+function showQuestion(question) {
+
+    document.getElementById("question").textContent =
+        question;
+
+    document.getElementById("answer").value = "";
+
+    document.getElementById("progressText").textContent =
+        `Question ${questionNumber} of ${totalQuestions}`;
+
+    document.getElementById("progressBar").style.width =
+        `${(questionNumber / totalQuestions) * 100}%`;
+}
+
+async function submitAnswer() {
+
+    const answer =
+        document.getElementById("answer").value.trim();
+
+    if (!answer) {
+        alert("Please enter your answer.");
+        return;
+    }
+
+    const button =
+        document.getElementById("submitBtn");
+
+    const loading =
+        document.getElementById("loading");
+
+    button.disabled = true;
+    loading.style.display = "block";
+
+    try {
+
+        const response = await fetch(API_URL, {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                sessionId: sessionId,
+                message: answer
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                JSON.stringify(data)
+            );
+        }
+
+        if (data.done) {
+
+            showFinalResult(data);
+
+            return;
+        }
+
+        questionNumber++;
+
+        showQuestion(data.reply);
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Something went wrong. Check the backend terminal."
+        );
+
+    } finally {
+
+        button.disabled = false;
+        loading.style.display = "none";
+    }
+}
+
+function showFinalResult(data) {
+
+    document.getElementById("interviewCard").style.display =
+        "none";
+
+    document.querySelector(".progress-box").style.display =
+        "none";
+
+    document.getElementById("result").style.display =
+        "block";
+
+    const feedback = data.feedback || {};
+
+    const summary =
+        feedback.summary || "Interview completed.";
+
+    document.getElementById("summary").textContent =
+        summary;
+
+    // Extract average score from:
+    // "Interview completed with an average score of 2.0/10."
+    const match = summary.match(
+        /average score of ([0-9.]+)\/10/
+    );
+
+    if (match) {
+
+        document.getElementById("finalScore").textContent =
+            `${match[1]}/10`;
+
+    } else {
+
+        document.getElementById("finalScore").textContent =
+            "--/10";
+    }
+
+    renderList(
+        "strengths",
+        feedback.strengths
+    );
+
+    renderList(
+        "gaps",
+        feedback.gaps
+    );
+
+    renderList(
+        "nextSteps",
+        feedback.next
+    );
+}
+
+function renderList(id, items) {
+
+    const element =
+        document.getElementById(id);
+
+    element.innerHTML = "";
+
+    if (!items || items.length === 0) {
+
+        const li = document.createElement("li");
+
+        li.textContent = "None identified.";
+
+        element.appendChild(li);
+
+        return;
+    }
+
+    items.forEach(item => {
+
+        const li =
+            document.createElement("li");
+
+        li.textContent = item;
+
+        element.appendChild(li);
+    });
+}
+
+document.getElementById("submitBtn")
+    .addEventListener(
+        "click",
+        submitAnswer
+    );
+
+startInterview();
+
+</script>
+
+</body>
+</html>

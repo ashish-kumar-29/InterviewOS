@@ -1,4 +1,4 @@
-import uuid
+from copy import deepcopy
 
 
 class SessionManager:
@@ -6,18 +6,19 @@ class SessionManager:
     def __init__(self):
         self.sessions = {}
 
-    def create_session(self, candidate_id):
-
-        session_id = str(uuid.uuid4())
+    def create_session(self, session_id, candidate_id, plan):
 
         self.sessions[session_id] = {
             "candidate_id": candidate_id,
+            "plan": deepcopy(plan),
+            "current_index": 0,
             "questions": [],
             "answers": [],
+            "evaluations": [],
+            "scores": [],
+            "knowledge": {},
             "covered_days": set(),
-            "objectives_completed": [],
-            "difficulty": None,
-            "feedback": {}
+            "completed": False
         }
 
         return session_id
@@ -27,16 +28,54 @@ class SessionManager:
 
     def add_question(self, session_id, question):
 
-        self.sessions[session_id]["questions"].append(question)
+        session = self.sessions.get(session_id)
+
+        if session:
+            session["questions"].append(question)
 
     def add_answer(self, session_id, answer):
 
-        self.sessions[session_id]["answers"].append(answer)
+        session = self.sessions.get(session_id)
 
-    def cover_day(self, session_id, day):
+        if session:
+            session["answers"].append(answer)
 
-        self.sessions[session_id]["covered_days"].add(day)
+    def add_evaluation(self, session_id, evaluation):
 
-    def complete_objective(self, session_id, objective):
+        session = self.sessions.get(session_id)
 
-        self.sessions[session_id]["objectives_completed"].append(objective)
+        if session:
+            session["evaluations"].append(evaluation)
+            session["scores"].append(
+                evaluation.get("score", 0)
+            )
+
+    def update_knowledge(
+        self,
+        session_id,
+        topic,
+        knowledge
+    ):
+
+        session = self.sessions.get(session_id)
+
+        if session:
+            session["knowledge"][topic] = knowledge
+
+    def next_question(self, session_id):
+
+        session = self.sessions.get(session_id)
+
+        if not session:
+            return 0
+
+        session["current_index"] += 1
+
+        return session["current_index"]
+
+    def complete(self, session_id):
+
+        session = self.sessions.get(session_id)
+
+        if session:
+            session["completed"] = True
