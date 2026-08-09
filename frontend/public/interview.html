@@ -1251,12 +1251,8 @@ async function startInterview() {
                 },
 
                 body: JSON.stringify({
-
-                    sessionId:
-                        sessionId,
-
-                    candidate:
-                        candidate
+                    sessionId,
+                    candidate
 
                 })
 
@@ -1274,6 +1270,11 @@ async function startInterview() {
             );
 
         }
+        if (data.done) {
+            showFinalResult(data);
+            return;
+        }
+
 
 
         showQuestion(
